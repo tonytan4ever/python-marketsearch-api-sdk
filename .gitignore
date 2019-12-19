@@ -1,2 +1,8 @@
 #enviroment
 .env
+
+#pycache
+.pytest_cache/
+tests/__pycache__
+market_api/__pycache__
+market_api/config/__pycache__
