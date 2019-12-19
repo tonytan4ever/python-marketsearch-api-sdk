@@ -1,9 +1,9 @@
 import os
+import unittest
 
-from .base import BaseTestCase
 from market_api.market.market_api import MarketAPI
 
-class MarketAppTestCase(BaseTestCase):
+class MarketAppTestCase(unittest.TestCase):
 
     def test_get_vin_history(self):
         token = os.getenv('API_TOKEN')
