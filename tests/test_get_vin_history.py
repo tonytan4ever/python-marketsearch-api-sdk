@@ -1,7 +1,7 @@
 import os
 import unittest
 
-from market_api.market.market_api import MarketAPI
+from market_api.market_api import MarketAPI
 
 class MarketAppTestCase(unittest.TestCase):
 
