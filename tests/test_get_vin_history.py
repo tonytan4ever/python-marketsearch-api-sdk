@@ -1,0 +1,33 @@
+import os
+
+from .base import BaseTestCase
+from market_api.market.market_api import MarketAPI
+
+class MarketAppTestCase(BaseTestCase):
+
+    def test_get_vin_history(self):
+        token = os.getenv('API_TOKEN')
+        api = MarketAPI(token)
+        response = api.get_VIN_history()
+        self.assertListEqual(list(response[0].keys()), [
+            'id',
+            'miles',
+            'data_source',
+            'vdp_url',
+            'seller_type',
+            'inventory_type',
+            'trim_r',
+            'last_seen_at',
+            'last_seen_at_date',
+            'scraped_at',
+            'scraped_at_date',
+            'first_seen_at',
+            'first_seen_at_date',
+            'source',
+            'seller_name',
+            'city',
+            'state',
+            'zip',
+            'status_date',
+        ])
+        self.assertTrue(len(response) > 0)
