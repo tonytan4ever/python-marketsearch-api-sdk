@@ -101,6 +101,8 @@ ENV/
 .mypy_cache/
 
 # Mr Developer
+.idea
+.iml
 .mr.developer.cfg
 .project
 .pydevproject
