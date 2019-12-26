@@ -3,12 +3,13 @@ import unittest
 
 from market_api.market_api import MarketAPI
 
+
 class MarketAppTestCase(unittest.TestCase):
 
     def test_get_vin_history(self):
         token = os.getenv('API_TOKEN')
-        api = MarketAPI(token)
-        response = api.get_VIN_history()
+        client = MarketAPI(token)
+        response = client.get_vin_history('2FMGK5D81EBD14330')
         self.assertListEqual(list(response[0].keys()), [
             'id',
             'miles',
