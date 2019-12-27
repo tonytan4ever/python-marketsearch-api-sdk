@@ -1,7 +1,7 @@
 import requests
 
 from market_api.market import MarketAPIBase
-
+from market_api.schema import GetVinHistoryOutputSchema
 
 class MarketAPI(MarketAPIBase):
 
@@ -22,4 +22,7 @@ class MarketAPI(MarketAPIBase):
                                     request_url,
                                     headers=self.headers,
                                     params=self.get_querystring())
-        return response.json()
+        schema = GetVinHistoryOutputSchema(many=True)
+        result = schema.dump(response.json())
+        return result
+

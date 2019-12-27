@@ -61,7 +61,7 @@ class MarketAppTestCase(TestCase):
             client = MarketAPI(token)
 
             response = client.get_vin_history('2FMGK5D81EBD14330')
-            self.assertListEqual(list(response[0].keys()), [
+            self.assertEqual(set(response[0].keys()), set([
                 'id',
                 'price',
                 'miles',
@@ -82,5 +82,5 @@ class MarketAppTestCase(TestCase):
                 'state',
                 'zip',
                 'status_date',
-            ])
+            ]))
             self.assertTrue(len(response) > 0)
