@@ -59,9 +59,9 @@ class MarketAppTestCase(TestCase):
         with mock.patch('market_api.market_api.MarketAPI.get_vin_history', return_value=vin_history):
             token = os.getenv('API_TOKEN')
             client = MarketAPI(token)
-
-            response = client.get_vin_history('2FMGK5D81EBD14330')
-            self.assertListEqual(list(response[0].keys()), [
+            vin = '2FMGK5D81EBD14330'
+            response = client.get_vin_history(vin)
+            self.assertEqual(set(response[0].keys()), set([
                 'id',
                 'price',
                 'miles',
@@ -82,5 +82,12 @@ class MarketAppTestCase(TestCase):
                 'state',
                 'zip',
                 'status_date',
-            ])
+            ]))
             self.assertTrue(len(response) > 0)
+
+    def test_vin_non_validate(self):
+        token = os.getenv('API_TOKEN')
+        client = MarketAPI(token)
+        vin = '2FMGK5D81EBD1433'
+        response = client.get_vin_history(vin)
+        self.assertEqual(response, 'Vin is not valid: {}'.format(vin))
