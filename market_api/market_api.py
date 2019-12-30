@@ -1,8 +1,11 @@
 import requests
 
+from marshmallow import ValidationError
+
 from market_api.market import MarketAPIBase
-from market_api.schema import GetVinHistoryOutputSchema
+from market_api.schema import GetVinHistoryOutputSchema, VinInputSchema
 from market_api.object import VinHistoryOutput
+
 
 class MarketAPI(MarketAPIBase):
 
@@ -14,6 +17,13 @@ class MarketAPI(MarketAPIBase):
         a month from all over the web. This API will return only recent 50
         records/listings for a VIN. Results are sorted on status_date
         """
+        try:
+            vin_schema = VinInputSchema().load({"vin": vin})
+        except ValidationError:
+            return 'Vin is not valid: {}'.format(
+                vin
+            )
+
         api_url = "/history/{vin}".format(vin=vin)
         request_url = '{base_url}{api_url}'.format(
             base_url=self.base_url,
@@ -48,6 +58,7 @@ class MarketAPI(MarketAPIBase):
                 status_date=history['status_date']
             )
             outputs.append(vin_history)
+
         schema = GetVinHistoryOutputSchema(many=True)
         result = schema.dump(outputs)
         return result

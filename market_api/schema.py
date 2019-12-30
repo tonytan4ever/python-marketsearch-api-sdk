@@ -1,6 +1,13 @@
+import re
 
-from marshmallow import Schema, fields
+from marshmallow import Schema, fields, ValidationError
 
+
+def validate_vin(vin):
+    if re.match(r'^[A-HJ-NPR-Za-hj-npr-z\d]{17}', vin):
+        return True
+    else:
+        raise ValidationError("Vin is not valid!")
 
 class GetVinHistoryOutputSchema(Schema):
     id = fields.String(required=True)
@@ -23,3 +30,7 @@ class GetVinHistoryOutputSchema(Schema):
     state = fields.String(required=True)
     zip = fields.String(required=True)
     status_date = fields.Integer(required=True)
+
+
+class VinInputSchema(Schema):
+    vin = fields.String(required=True, validate=validate_vin)
