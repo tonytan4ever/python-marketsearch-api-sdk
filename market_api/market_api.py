@@ -18,7 +18,7 @@ class MarketAPI(MarketAPIBase):
         records/listings for a VIN. Results are sorted on status_date
         """
         try:
-            vin_schema = VinInputSchema().load({"vin": vin})
+             VinInputSchema().load({"vin": vin})
         except ValidationError:
             return 'Vin is not valid: {}'.format(
                 vin
@@ -33,33 +33,11 @@ class MarketAPI(MarketAPIBase):
                                     request_url,
                                     headers=self.headers,
                                     params=self.get_querystring())
-        outputs = []
-        for history in response.json():
-            vin_history = VinHistoryOutput(
-                id=history['id'],
-                price=history['price'] if 'price' in history else None,
-                miles=history['miles'],
-                data_source=history['data_source'],
-                vdp_url=history['vdp_url'],
-                seller_type=history['seller_type'],
-                inventory_type=history['inventory_type'],
-                trim_r=history['trim_r'],
-                last_seen_at=history['last_seen_at'],
-                last_seen_at_date=history['last_seen_at_date'],
-                scraped_at=history['scraped_at'],
-                scraped_at_date=history['scraped_at_date'],
-                first_seen_at=history['first_seen_at'],
-                first_seen_at_date=history['first_seen_at_date'],
-                source=history['source'],
-                seller_name=history['seller_name'],
-                city=history['city'],
-                state=history['state'],
-                zip=history['zip'],
-                status_date=history['status_date']
-            )
-            outputs.append(vin_history)
 
-        schema = GetVinHistoryOutputSchema(many=True)
-        result = schema.dump(outputs)
+        schema = GetVinHistoryOutputSchema()
+        result = []
+        for history in response.json():
+            result_entry = schema.load(history)
+            result.append(result_entry)
         return result
 

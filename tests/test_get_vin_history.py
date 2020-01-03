@@ -3,12 +3,14 @@ import os
 from unittest import TestCase, mock
 
 from market_api.market_api import MarketAPI
+from market_api.schema import GetVinHistoryOutputSchema
 
 
 class MarketAppTestCase(TestCase):
 
     def test_get_vin_history(self):
 
+        schema = GetVinHistoryOutputSchema()
         vin_history = [
             {
                 'id': '2FMGK5D81EBD14330-c44611d6-764b-406e-85bd-752d5f3b24f8',
@@ -55,34 +57,22 @@ class MarketAppTestCase(TestCase):
                 'status_date': 1525877052
             }
         ]
+        vin_history = [
+            schema.load(history) for history in vin_history
+        ]
 
         with mock.patch('market_api.market_api.MarketAPI.get_vin_history', return_value=vin_history):
             token = os.getenv('API_TOKEN')
             client = MarketAPI(token)
             vin = '2FMGK5D81EBD14330'
             response = client.get_vin_history(vin)
-            self.assertEqual(set(response[0].keys()), set([
-                'id',
-                'price',
-                'miles',
-                'data_source',
-                'vdp_url',
-                'seller_type',
-                'inventory_type',
-                'trim_r',
-                'last_seen_at',
-                'last_seen_at_date',
-                'scraped_at',
-                'scraped_at_date',
-                'first_seen_at',
-                'first_seen_at_date',
-                'source',
-                'seller_name',
-                'city',
-                'state',
-                'zip',
-                'status_date',
-            ]))
+            first_vin_history = response[0]
+            self.assertEqual(
+                first_vin_history.id, vin_history[0].id
+            )
+            self.assertEqual(
+                first_vin_history.price, vin_history[0].price
+            )
             self.assertTrue(len(response) > 0)
 
     def test_vin_non_validate(self):
