@@ -9,6 +9,7 @@ def validate_vin(vin):
     else:
         raise ValidationError("Vin is not valid!")
 
+
 class GetVinHistoryOutputSchema(Schema):
     id = fields.String(required=True)
     price = fields.Integer()
