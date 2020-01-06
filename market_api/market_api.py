@@ -35,7 +35,6 @@ class MarketAPI(MarketAPIBase):
                                     request_url,
                                     headers=self.headers,
                                     params=req_query)
-
         schema = GetVinHistoryOutputSchema()
         result = []
         for history in response.json():
