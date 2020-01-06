@@ -9,7 +9,7 @@ class MarketAppPagenationTestCase(unittest.TestCase):
 
     def test_get_vin_history_with_pagination(self):
         
-        token = 'jJ97ATITZC83esJbWIBf1I5oFNGVaWAD'
+        token = os.getenv('API_TOKEN')
         client = MarketAPI(token)
 
         vins = {"1FTEW1EF1FFA67753":6,}
