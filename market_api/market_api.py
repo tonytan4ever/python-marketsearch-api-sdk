@@ -29,11 +29,13 @@ class MarketAPI(MarketAPIBase):
             base_url=self.base_url,
             api_url=api_url
         )
+        req_query = self.get_querystring()
+        req_query['page'] = page
         response = requests.request("GET",
                                     request_url,
                                     headers=self.headers,
-                                    params=self.get_querystring())
-
+                                    params=req_query)
+        
         schema = GetVinHistoryOutputSchema()
         result = []
         for history in response.json():
