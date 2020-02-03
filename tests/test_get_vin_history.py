@@ -6,6 +6,7 @@ from market_api.market_api import MarketAPI
 from market_api.schema import GetVinHistoryOutputSchema
 import time
 
+
 class MarketAppTestCase(TestCase):
 
     def test_get_vin_history(self):
@@ -81,11 +82,11 @@ class MarketAppTestCase(TestCase):
         vin = '2FMGK5D81EBD1433'
         response = client.get_vin_history(vin)
         self.assertEqual(response, 'Vin is not valid: {}'.format(vin))
-        
-        
+    
+
     def test_get_vin_history_with_pagination(self):
         
-        token = os.getenv('API_TOKEN')
+        token = 'jJ97ATITZC83esJbWIBf1I5oFNGVaWAD'
         client = MarketAPI(token)
 
         vins = {"1FTEW1EF1FFA67753":6,}

@@ -9,7 +9,7 @@ from market_api.object import VinHistoryOutput
 
 class MarketAPI(MarketAPIBase):
 
-    def get_vin_history(self, vin):
+    def get_vin_history(self, vin, page=1):
         """
         Pull online listing history for a VIN from Marketcheck's historical
         database that hosts data extracted from over 900M VDP pages since Jan
@@ -35,7 +35,7 @@ class MarketAPI(MarketAPIBase):
                                     request_url,
                                     headers=self.headers,
                                     params=req_query)
-        
+
         schema = GetVinHistoryOutputSchema()
         result = []
         for history in response.json():
