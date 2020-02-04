@@ -1,6 +1,7 @@
 import re
 
-from marshmallow import Schema, fields, ValidationError
+from marshmallow import Schema, ValidationError, fields, post_load
+from market_api.object import VinHistoryOutput
 
 
 def validate_vin(vin):
@@ -31,6 +32,10 @@ class GetVinHistoryOutputSchema(Schema):
     state = fields.String(required=True)
     zip = fields.String(required=True)
     status_date = fields.Integer(required=True)
+
+    @post_load
+    def make_history_entry(self, data, **kwargs):
+        return VinHistoryOutput(**data)
 
 
 class VinInputSchema(Schema):
