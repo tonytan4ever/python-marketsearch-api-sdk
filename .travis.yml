@@ -10,3 +10,13 @@ install:
 # command to run tests
 script:
   - pytest
+matrix:
+include:
+  - python: 3.6
+    env:
+     - TOX_ENV=py36
+  - python: 3.6
+    env:
+      - TOX_ENV=py36
+script:
+  - tox -e $(echo py$TRAVIS_PYTHON_VERSION | tr -d .)

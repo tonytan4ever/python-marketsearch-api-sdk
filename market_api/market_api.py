@@ -18,7 +18,7 @@ class MarketAPI(MarketAPIBase):
         records/listings for a VIN. Results are sorted on status_date
         """
         try:
-             VinInputSchema().load({"vin": vin})
+            VinInputSchema().load({"vin": vin})
         except ValidationError:
             return 'Vin is not valid: {}'.format(
                 vin
@@ -42,4 +42,3 @@ class MarketAPI(MarketAPIBase):
             result_entry = schema.load(history)
             result.append(result_entry)
         return result
-
