@@ -10,9 +10,10 @@ import json
 
 test_vin_non_validate_response = ""
 file = open("tests/mock.json", mode="r")
-data = file.read() 
+data = file.read()
 file.close()
 json_data = json.loads(data)
+
 
 class MarketAppTestCase(TestCase):
 
@@ -87,24 +88,24 @@ class MarketAppTestCase(TestCase):
         token = os.getenv('API_TOKEN')
         client = MarketAPI(token)
         vin = '2FMGK5D81EBD1433'
-        client.get_vin_history = MagicMock(return_value='Vin is not valid: {}'.format(vin))
+        client.get_vin_history = MagicMock(
+            return_value='Vin is not valid: {}'.format(vin))
         response = client.get_vin_history(vin)
         self.assertEqual(response, 'Vin is not valid: {}'.format(vin))
 
     def test_get_vin_history_with_pagination(self):
-        
+
         token = os.getenv('API_TOKEN')
         client = MarketAPI(token)
 
-        vins = {"1FTEW1EF1FFA67753":6,}
+        vins = {"1FTEW1EF1FFA67753": 6, }
 
-        for vin,page_limit in vins.items():
-            for count in range(1,page_limit+1):
+        for vin, page_limit in vins.items():
+            for count in range(1, page_limit+1):
                 client.get_vin_history = MagicMock(return_value=json_data)
                 api_response = client.get_vin_history(vin=vin, page=count)
-                last_seen_at_ary = []
-                
+
                 assert len(api_response) != 0
-            
+
                 if count != page_limit:
                     assert len(api_response) == 50
