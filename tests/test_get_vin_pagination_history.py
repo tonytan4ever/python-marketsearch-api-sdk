@@ -3,7 +3,6 @@ import unittest
 from unittest.mock import MagicMock
 
 from market_api.market_api import MarketAPI
-from market_api.schema import GetVinHistoryOutputSchema
 import json
 
 test_vin_non_validate_response = ""
