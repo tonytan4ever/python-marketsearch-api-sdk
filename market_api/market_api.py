@@ -4,7 +4,6 @@ from marshmallow import ValidationError
 
 from market_api.market import MarketAPIBase
 from market_api.schema import GetVinHistoryOutputSchema, VinInputSchema
-from market_api.object import VinHistoryOutput
 
 
 class MarketAPI(MarketAPIBase):

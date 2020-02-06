@@ -26,7 +26,8 @@ class MarketAppTestCase(TestCase):
                 'price': 21800,
                 'miles': 75514,
                 'data_source': 'mc',
-                'vdp_url': 'https://www.lithia.com/used/Ford/2014-Ford-Flex-medford-or-1f945c690a0e0aea23fb4458c35c15ac.htm',
+                'vdp_url': 'https://www.lithia.com/used/Ford/2014-Ford-Flex-'
+                           'medford-or-1f945c690a0e0aea23fb4458c35c15ac.htm',
                 'seller_type': 'dealer',
                 'inventory_type': 'used',
                 'trim_r': 'Limited',
@@ -48,7 +49,8 @@ class MarketAppTestCase(TestCase):
                 'price': 21800,
                 'miles': 75514,
                 'data_source': 'mc',
-                'vdp_url': 'https://www.lumeiauto.com/used/Ford/2014-Ford-Flex-1f945c690a0e0aea23fb4458c35c15ac.htm',
+                'vdp_url': 'https://www.lumeiauto.com/used/Ford/2014-Ford-Flex'
+                           '-1f945c690a0e0aea23fb4458c35c15ac.htm',
                 'seller_type': 'dealer',
                 'inventory_type': 'used',
                 'trim_r': 'Limited',
@@ -70,7 +72,8 @@ class MarketAppTestCase(TestCase):
             schema.load(history) for history in vin_history
         ]
 
-        with patch('market_api.market_api.MarketAPI.get_vin_history', return_value=vin_history):
+        with patch('market_api.market_api.MarketAPI.get_vin_history',
+                   return_value=vin_history):
             token = os.getenv('API_TOKEN')
             client = MarketAPI(token)
             vin = '2FMGK5D81EBD14330'
@@ -105,7 +108,7 @@ class MarketAppTestCase(TestCase):
                 client.get_vin_history = MagicMock(return_value=json_data)
                 api_response = client.get_vin_history(vin=vin, page=count)
 
-                assert len(api_response) != 0
+                self.assertTrue(len(api_response) != 0)
 
                 if count != page_limit:
-                    assert len(api_response) == 50
+                    self.assertTrue(len(api_response) == 50)
