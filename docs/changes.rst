@@ -1,4 +1,5 @@
-# Changelog
+Changelog
+=========
 
 ## version x.x.x 
 
