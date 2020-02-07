@@ -1,4 +1,5 @@
-# Api Reference
+Api Reference
+=============
 
 Information Here
 
