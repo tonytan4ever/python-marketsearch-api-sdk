@@ -6,7 +6,7 @@ setup(
     long_description='A long description of my custom package tested with tox',
     install_requires=[
         'requests>=2.20.0',
-        'marshmallow==3.3.0',
+        'marshmallow==3.26.2',
         'flake8==3.7.9'
     ],
     classifiers=[
